@@ -7,7 +7,8 @@
 #include "drivers/rcc.hh"
 #include "memsize.h"
 #include "print_messages.hh"
-#include "stm32mp15-osd32mp1-ddr3-1x4Gb.dtsi"
+//#include "stm32mp15-osd32mp1-ddr3-1x4Gb.dtsi"
+#include "stm32mp15-dk1-ddr3-1x4Gb.dtsi"
 #include "stm32mp1_ddr.h"
 #include "stm32mp1xx.h"
 
