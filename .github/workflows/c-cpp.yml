@@ -29,10 +29,10 @@ jobs:
       with:
         name: build-artifacts
         path: |
-          examples/*.elf
-          examples/*.map
-          examples/*.asm
-          bootloaders/*.elf
-          bootloaders/*.map
-          bootloaders/*.asm
+          examples/**/*.elf
+          examples/**/*.map
+          examples/**/*.asm
+          bootloaders/**/*.elf
+          bootloaders/**/*.map
+          bootloaders/**/*.asm
       
