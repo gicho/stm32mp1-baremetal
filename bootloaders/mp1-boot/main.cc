@@ -12,12 +12,12 @@
 
 #include "osd32brk_conf.hh"
 #include "stm32disco_conf.hh"
-#include "stm32mp157ddk1_conf.hh"
+//#include "stm32mp157ddk1_conf.hh"
 
 // Uncomment one of these to select your board:
-//namespace Board = OSD32BRK;
+namespace Board = OSD32BRK;
 //namespace Board = STM32MP1Disco;
-namespace Board = STM32MP157DK1;
+//namespace Board = STM32MP157DK1;
 
 void main()
 {
