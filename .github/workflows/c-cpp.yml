@@ -24,3 +24,15 @@ jobs:
     
     - name: Build MP1-Boot
       run: cd bootloaders/mp1-boot && make
+      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts
+        path: |
+          examples/**/*.elf
+          examples/**/*.map
+          examples/**/*.asm
+          bootloaders/**/*.elf
+          bootloaders/**/*.map
+          bootloaders/**/*.asm
+      
