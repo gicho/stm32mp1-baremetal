@@ -29,7 +29,8 @@ OPTFLAG ?= -O0
 
 AFLAGS = $(MCU)
 
-CFLAGS = -g2 \
+CFLAGS = -g \
+		 -ggdb \
 		 -fno-common \
 		 $(ARCH_CFLAGS) \
 		 $(MCU) \
@@ -40,6 +41,8 @@ CFLAGS = -g2 \
 		 $(EXTRACFLAGS)\
 
 CXXFLAGS = $(CFLAGS) \
+		-g \
+		-ggdb \
 		-std=c++2a \
 		-fno-rtti \
 		-fno-exceptions \

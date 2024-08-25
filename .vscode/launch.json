@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceFolder}",
+            "servertype": "openocd",
+            "gdbPath": "/opt/xpack-arm-none-eabi-gcc-12.2.1-1.2/bin/arm-none-eabi-gdb",
+            "executable": "${workspaceRoot}/bootloaders/mp1-boot/build/fsbl.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "device": "STM32MP1xxx",
+            "configFiles": [
+                "board/stm32mp15x_dk2.cfg"
+			],
+            "runToEntryPoint": "main",
+            "svdFile": "${workspaceRoot}/STM32MP1xx.svd",
+            "preLaunchTask": "build",
+            "postRestartCommands": [
+                "monitor reset halt",
+                "load",
+                "break main",
+            ]
+        }
+    ]
+}
