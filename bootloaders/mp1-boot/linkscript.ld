@@ -102,6 +102,10 @@ SECTIONS {
 
 	_fiq_stack_end = _irq_stack_start;
 	_fiq_stack_start = _fiq_stack_end - 0x100;
+	
+	_sp = _user_stack_end - 16;
+	_stack_bottom = _fiq_stack_start;
+	_end = __STACK_START;
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :

@@ -1,6 +1,6 @@
 SDCARD_MOUNT_PATH ?= /Volumes/BAREAPP
 
-LINKSCR ?= linkscript.ld
+LINKSCR ?= stm32mp13xx_a7_sysram.ld
 EXTLIBDIR ?= ../../third-party
 UBOOTDIR ?= $(EXTLIBDIR)/u-boot/build
 BUILDDIR ?= build

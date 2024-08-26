@@ -1,4 +1,4 @@
-#include "boot_media_loader.hh"
+//#include "boot_media_loader.hh"
 #include "clocks.hh"
 #include "ddr/ram_tests.hh"
 #include "ddr/stm32mp1_ram.h"
@@ -13,6 +13,9 @@
 #include "osd32brk_conf.hh"
 #include "stm32disco_conf.hh"
 //#include "stm32mp157ddk1_conf.hh"
+
+#include "tx_api.h"
+
 
 // Uncomment one of these to select your board:
 namespace Board = OSD32BRK;
@@ -46,6 +49,7 @@ void main()
 	print("Testing RAM.\n");
 	RamTests::run_all(DRAM_MEM_BASE, stm32mp1_ddr_get_size());
 
+#if 0
 	auto boot_method = BootDetect::read_boot_method();
 	print("Booted from ", BootDetect::bootmethod_string(boot_method).data(), "\n");
 
@@ -60,7 +64,12 @@ void main()
 		loader.boot_image();
 	}
 
-	// Should not reach here, but in case we do, blink LED rapidly
+#endif	// Should not reach here, but in case we do, blink LED rapidly
+
+
+    /* Enter the ThreadX kernel.  */
+    tx_kernel_enter();
+
 	print("FAILED!\n");
 	constexpr uint32_t dlytime = 50000;
 	while (1) {

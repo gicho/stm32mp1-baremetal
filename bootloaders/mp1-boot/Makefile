@@ -1,7 +1,7 @@
 BINARYNAME = fsbl
 BUILDDIR = build
 
-OPTFLAG = -O3
+OPTFLAG = -O0
 
 EXTLIBDIR = ../../third-party
 SHAREDDIR = ../../shared
@@ -23,9 +23,16 @@ SOURCES = startup.s \
 		  ddr/ram_tests.cc \
 		  uboot-port/common/memsize.c \
 		  uboot-port/lib/crc32.c \
-		  norflash/qspi_ll.c \
-		  norflash/qspi_norflash_read.c \
-		  gpt/gpt.cc \
+		  $(wildcard $(EXTLIBDIR)/threadx/common/src/*.c) \
+		  $(wildcard $(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/src/*.S) \
+		  tx_initialize_low_level.S \
+		  v7.S \
+		  MP_PrivateTimer.S \
+		  MP_GIC.s \
+		  $(EXTLIBDIR)/threadx/samples/demo_threadx.c \
+		  startup_stm32mp15x_ca7_azurertos.c \
+
+		 
 
 INCLUDES = -I. \
 		   -I$(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Inc \
@@ -35,6 +42,10 @@ INCLUDES = -I. \
 		   -Iddr/ \
 		   -Iuboot-port/include \
 		   -Iuboot-port/arch/arm/include \
+		   -I$(EXTLIBDIR)/threadx/common/inc \
+		   -I$(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/inc \
+		   -I$(EXTLIBDIR)/CMSIS/Device/ST/STM32MP1xx/Include \
+		   
 
 all: image
 
