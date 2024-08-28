@@ -23,11 +23,15 @@ ARCH_CFLAGS ?= -DUSE_FULL_LL_DRIVER \
 			   -DSTM32MP157Cxx \
 			   -DSTM32MP1 \
 			   -DCORE_CA7 \
+			   -DAZURE_RTOS \
+			   -DUSE_DDR \
+			   -DMMU_USE \
+			   -DCACHE_USE \
 			   $(EXTRA_ARCH_CFLAGS) \
 
 OPTFLAG ?= -O0
 
-AFLAGS = $(MCU)
+AFLAGS = $(MCU) -x assembler-with-cpp
 
 CFLAGS = -g \
 		 -ggdb \
@@ -39,6 +43,7 @@ CFLAGS = -g \
 		 -nostartfiles \
 		 -ffreestanding \
 		 $(EXTRACFLAGS)\
+		 -mthumb \
 
 CXXFLAGS = $(CFLAGS) \
 		-g \
@@ -73,7 +78,7 @@ ARCH 	= arm-none-eabi
 CC 		= $(ARCH)-gcc
 CXX 	= $(ARCH)-g++
 LD 		= $(ARCH)-g++
-AS 		= $(ARCH)-as
+AS 		= $(ARCH)-gcc
 OBJCPY 	= $(ARCH)-objcopy
 OBJDMP 	= $(ARCH)-objdump
 GDB 	= $(ARCH)-gdb
@@ -102,7 +107,7 @@ install-mp1-boot:
 $(OBJDIR)/%.o: %.s
 	@mkdir -p $(dir $@)
 	$(info Building $< at $(OPTFLAG))
-	@$(AS) $(AFLAGS) $< -o $@ 
+	@$(AS) -c $(AFLAGS) $< -o $@ 
 
 $(OBJDIR)/%.o: %.c $(OBJDIR)/%.d
 	@mkdir -p $(dir $@)

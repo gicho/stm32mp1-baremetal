@@ -6,10 +6,14 @@ OPTFLAG = -O0
 EXTLIBDIR = ../../third-party
 SHAREDDIR = ../../shared
 
-SOURCES = startup.s \
+SOURCES = startup_stm32mp15x_ca7_azurertos.c \
+		  system_stm32mp15x_A7_azurertos.c \
+		  syscalls.c \
 		  main.cc \
-		  systeminit.c \
-		  $(SHAREDDIR)/system/syscalls.c \
+		  tx_initialize_low_level.S \
+		  $(wildcard $(EXTLIBDIR)/threadx/common/src/*.c) \
+		  $(wildcard $(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/src/*.S) \
+		  $(SHAREDDIR)/system/mmu_ca7.c \
 		  $(SHAREDDIR)/system/libc_stub.c \
 		  $(SHAREDDIR)/system/libcpp_stub.cc \
 		  $(SHAREDDIR)/print.cc \
@@ -18,20 +22,13 @@ SOURCES = startup.s \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_sdmmc.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_sd.c \
+		  $(EXTLIBDIR)/CMSIS/Core_A/Source/irq_ctrl_gic.c \
 		  ddr/stm32mp1_ddr.cc \
 		  ddr/stm32mp1_ram.cc \
 		  ddr/ram_tests.cc \
 		  uboot-port/common/memsize.c \
 		  uboot-port/lib/crc32.c \
-		  $(wildcard $(EXTLIBDIR)/threadx/common/src/*.c) \
-		  $(wildcard $(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/src/*.S) \
-		  tx_initialize_low_level.S \
-		  v7.S \
-		  MP_PrivateTimer.S \
-		  MP_GIC.s \
-		  $(EXTLIBDIR)/threadx/samples/demo_threadx.c \
-		  startup_stm32mp15x_ca7_azurertos.c \
-
+		  
 		 
 
 INCLUDES = -I. \
@@ -39,6 +36,7 @@ INCLUDES = -I. \
 		   -I$(EXTLIBDIR)/CMSIS/Core_A/Include \
 		   -I$(EXTLIBDIR)/CMSIS/Device/ST/STM32MP1xx/Include \
 		   -I$(SHAREDDIR) \
+		   -I$(SHAREDDIR)/system \
 		   -Iddr/ \
 		   -Iuboot-port/include \
 		   -Iuboot-port/arch/arm/include \
