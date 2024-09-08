@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     irq_ctrl_gic.c
  * @brief    Interrupt controller handling implementation for GIC
- * @version  V1.0.1
- * @date     9. April 2018
+ * @version  V1.1.1
+ * @date     29. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2017-2021 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -36,7 +36,11 @@
 #define IRQ_GIC_LINE_COUNT      (1020U)
 #endif
 
-static IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT] = { 0U };
+#if defined ( __ICCARM__ )
+static __no_init IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT];  // Added for IAR porting
+#else
+static IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT];
+#endif
 static uint32_t     IRQ_ID0;
 
 /// Initialize interrupt controller.
@@ -148,6 +152,11 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
       status = -1;
     }
 
+    val = (mode & IRQ_MODE_MODEL_Msk);
+    if (val == IRQ_MODE_MODEL_1N) {
+      cfg |= 1;   // 1-N model
+    }
+
     // Check interrupt type
     val = mode & IRQ_MODE_TYPE_Msk;
 
@@ -179,7 +188,7 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
     if (val == IRQ_MODE_CPU_ALL) {
       cpu = 0xFFU;
     } else {
-      cpu = val >> IRQ_MODE_CPU_Pos;
+      cpu = (uint8_t)(val >> IRQ_MODE_CPU_Pos);
     }
 
     // Apply configuration if no mode error
@@ -216,6 +225,9 @@ __WEAK uint32_t IRQ_GetMode (IRQn_ID_t irqn) {
       mode |= IRQ_MODE_TRIG_LEVEL;
     }
 
+    if (val & 1U) {
+      mode |= IRQ_MODE_MODEL_1N;
+    }
     // Get interrupt CPU targets
     mode |= GIC_GetTarget ((IRQn_Type)irqn) << IRQ_MODE_CPU_Pos;
 

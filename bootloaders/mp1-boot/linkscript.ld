@@ -5,7 +5,7 @@ MEMORY {
     SYSRAM (rwx)    :   ORIGIN = 0x2FFC2400, LENGTH = (256K - 0x2400)
 }
 
-ENTRY(_Reset);
+ENTRY(_Reset_Handler);
 
 __STACK_START = 0x30000000;
 __HEAP_SIZE = 0x0;

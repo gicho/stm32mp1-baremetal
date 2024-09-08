@@ -6,28 +6,31 @@ OPTFLAG = -O0
 EXTLIBDIR = ../../third-party
 SHAREDDIR = ../../shared
 
+#		  systeminit.c 		  v7.s MP_PrivateTimer.S uboot-port/lib/crc32.c  $(SHAREDDIR)/system/mmu_ca7.c 
+
+# $(SHAREDDIR)/system/libc_stub.c 		  $(SHAREDDIR)/system/libcpp_stub.cc \
+
+# main.cc 		  ddr/stm32mp1_ddr.cc ddr/stm32mp1_ram.cc ddr/ram_tests.cc  uboot-port/common/memsize.c 		  $(SHAREDDIR)/print.cc \
+
 SOURCES = startup_stm32mp15x_ca7_azurertos.c \
 		  system_stm32mp15x_A7_azurertos.c \
+		  mmu_stm32mp13xx.c \
 		  syscalls.c \
-		  main.cc \
+		  main.c \
+		  MP_PrivateTimer.S \
+		  app_azure_rtos.c \
+		  app_threadx.c \
 		  tx_initialize_low_level.S \
 		  $(wildcard $(EXTLIBDIR)/threadx/common/src/*.c) \
 		  $(wildcard $(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/src/*.S) \
-		  $(SHAREDDIR)/system/mmu_ca7.c \
-		  $(SHAREDDIR)/system/libc_stub.c \
-		  $(SHAREDDIR)/system/libcpp_stub.cc \
-		  $(SHAREDDIR)/print.cc \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_usart.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_rcc.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_sdmmc.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_sd.c \
 		  $(EXTLIBDIR)/CMSIS/Core_A/Source/irq_ctrl_gic.c \
-		  ddr/stm32mp1_ddr.cc \
-		  ddr/stm32mp1_ram.cc \
-		  ddr/ram_tests.cc \
-		  uboot-port/common/memsize.c \
-		  uboot-port/lib/crc32.c \
+
+		  
 		  
 		 
 

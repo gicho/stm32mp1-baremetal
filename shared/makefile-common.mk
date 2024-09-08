@@ -15,9 +15,11 @@ ENTRYPOINT 	= 0xC2000040
 OBJECTS   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 DEPS   	  = $(addprefix $(OBJDIR)/, $(addsuffix .d, $(basename $(SOURCES))))
 
-MCU ?=  -mcpu=cortex-a7 -march=armv7ve -mfpu=neon-vfpv4 -mlittle-endian -mfloat-abi=hard
+MCU ?=  -mcpu=cortex-a7 -mfpu=vfpv4-d16 -mfloat-abi=hard -fstack-usage --specs=nano.specs -mthumb
 
 EXTRA_ARCH_CFLAGS ?= 
+
+# -DMMU_USE 
 
 ARCH_CFLAGS ?= -DUSE_FULL_LL_DRIVER \
 			   -DSTM32MP157Cxx \
@@ -25,24 +27,24 @@ ARCH_CFLAGS ?= -DUSE_FULL_LL_DRIVER \
 			   -DCORE_CA7 \
 			   -DAZURE_RTOS \
 			   -DUSE_DDR \
-			   -DMMU_USE \
 			   -DCACHE_USE \
+			   -DMMU_USE \
 			   $(EXTRA_ARCH_CFLAGS) \
 
 OPTFLAG ?= -O0
 
-AFLAGS = $(MCU) -x assembler-with-cpp
+AFLAGS = $(MCU) -x assembler-with-cpp -g
+
+
+#		 -nostartfiles -ffreestanding  -fno-common 		 -fdata-sections -ffunction-sections \
 
 CFLAGS = -g \
 		 -ggdb \
-		 -fno-common \
 		 $(ARCH_CFLAGS) \
 		 $(MCU) \
 		 $(INCLUDES) \
-		 -fdata-sections -ffunction-sections \
-		 -nostartfiles \
-		 -ffreestanding \
 		 $(EXTRACFLAGS)\
+		 -ffunction-sections -Wall -Wno-strict-aliasing \
 		 -mthumb \
 
 CXXFLAGS = $(CFLAGS) \
@@ -63,13 +65,14 @@ CXXFLAGS = $(CFLAGS) \
 
 LINK_STDLIB ?= -nostdlib
 
+#$(LINK_STDLIB)  -nostartfiles -ffreestanding \
+
 LFLAGS = -Wl,--gc-sections \
 		 -Wl,-Map,$(BUILDDIR)/$(BINARYNAME).map,--cref \
+		 --specs=nosys.specs \
+		 -static \
 		 $(MCU)  \
 		 -T $(LINKSCR) \
-		 $(LINK_STDLIB) \
-		 -nostartfiles \
-		 -ffreestanding \
 		 $(EXTRALDFLAGS) \
 
 DEPFLAGS = -MMD -MP -MF $(OBJDIR)/$(basename $<).d
@@ -77,7 +80,7 @@ DEPFLAGS = -MMD -MP -MF $(OBJDIR)/$(basename $<).d
 ARCH 	= arm-none-eabi
 CC 		= $(ARCH)-gcc
 CXX 	= $(ARCH)-g++
-LD 		= $(ARCH)-g++
+LD 		= $(ARCH)-gcc
 AS 		= $(ARCH)-gcc
 OBJCPY 	= $(ARCH)-objcopy
 OBJDMP 	= $(ARCH)-objdump

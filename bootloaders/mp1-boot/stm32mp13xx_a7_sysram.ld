@@ -39,7 +39,7 @@ TTB_L1_SIZE = 16384;        /* MMU Level 1 Translation table size */
 TTB_L2_SIZE = 1024;         /* MMU Level 2 Translation table size */
 
 MEMORY {
-      SYSRAM_BASE (rwx)   : ORIGIN = 0x2FFE0000, LENGTH = 160K
+      SYSRAM_BASE (rwx)   : ORIGIN = 0x2FFC0000, LENGTH = 256K
 }
 
 /* Select Memory in which code has to be placed and offset of code from start of this memory */ 

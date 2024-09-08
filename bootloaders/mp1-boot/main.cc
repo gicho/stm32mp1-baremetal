@@ -1,3 +1,4 @@
+
 //#include "boot_media_loader.hh"
 #include "clocks.hh"
 #include "ddr/ram_tests.hh"
@@ -8,7 +9,7 @@
 #include "pmic.hh"
 #include "print.hh"
 #include "stm32mp157cxx_ca7.h"
-#include "systeminit.h"
+//#include "systeminit.h"
 
 #include "osd32brk_conf.hh"
 #include "stm32disco_conf.hh"
@@ -18,16 +19,17 @@
 
 
 // Uncomment one of these to select your board:
-namespace Board = OSD32BRK;
-//namespace Board = STM32MP1Disco;
+//namespace Board = OSD32BRK;
+namespace Board = STM32MP1Disco;
 //namespace Board = STM32MP157DK1;
 
 void main()
 {
+
 	Board::OrangeLED led;
 
 	auto clockspeed = SystemClocks::init_core_clocks(Board::HSE_Clock_Hz, Board::MPU_MHz);
-	security_init();
+	//security_init();
 
 	Uart<Board::ConsoleUART> console(Board::UartRX, Board::UartTX, 115200);
 	print("\n\nMP1-Boot\n\n");
@@ -46,25 +48,8 @@ void main()
 	print("Initializing RAM\n");
 	stm32mp1_ddr_setup();
 
-	print("Testing RAM.\n");
-	RamTests::run_all(DRAM_MEM_BASE, stm32mp1_ddr_get_size());
-
-#if 0
-	auto boot_method = BootDetect::read_boot_method();
-	print("Booted from ", BootDetect::bootmethod_string(boot_method).data(), "\n");
-
-	print("Loading app image...\n");
-
-	BootMediaLoader loader{boot_method};
-
-	bool image_ok = loader.load_image();
-
-	if (image_ok) {
-		print("Jumping to app\n");
-		loader.boot_image();
-	}
-
-#endif	// Should not reach here, but in case we do, blink LED rapidly
+	//print("Testing RAM.\n");
+	//RamTests::run_all(DRAM_MEM_BASE, stm32mp1_ddr_get_size());
 
 
     /* Enter the ThreadX kernel.  */
@@ -78,9 +63,11 @@ void main()
 		led.off();
 		udelay(dlytime);
 	}
+
 }
 
 void putchar_s(const char c)
 {
 	Uart<Board::ConsoleUART>::putchar(c);
 }
+

@@ -1,5 +1,6 @@
 #include "stm32mp1xx.h"
 
+#if 0
 uint32_t SystemCoreClock = 24000000;
 
 void SystemInit(void)
@@ -31,6 +32,7 @@ void SystemInit(void)
 	L2C_Enable();
 #endif
 }
+#endif
 
 void security_init()
 {
