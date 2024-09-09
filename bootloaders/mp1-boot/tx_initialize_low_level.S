@@ -21,10 +21,10 @@
 /**************************************************************************/
 
     .syntax unified
-#if defined(THUMB_MODE)
-    .thumb
-#else
+#if defined(ARM_MODE)
     .arm
+#else
+    .thumb
 #endif
 
   FIQ_MODE        =       0x11                    // Disable IRQ/FIQ FIQ mode
@@ -166,13 +166,6 @@ __tx_undefined:
   BKPT    0x0000
 __tx_undefined_loop:
   B       __tx_undefined_loop
-
-#if !defined(ARM_MODE)
-    .thumb_func
-#endif
-    .global __tx_swi_interrupt
-__tx_swi_interrupt:
-    B       __tx_swi_interrupt                  // Software interrupt handler
 
 /**************************************************************************/
 /* Reserved exception */

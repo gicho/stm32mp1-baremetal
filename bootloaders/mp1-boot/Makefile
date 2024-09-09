@@ -12,17 +12,25 @@ SHAREDDIR = ../../shared
 
 # main.cc 		  ddr/stm32mp1_ddr.cc ddr/stm32mp1_ram.cc ddr/ram_tests.cc  uboot-port/common/memsize.c 		  $(SHAREDDIR)/print.cc \
 
+# tx_thread_schedule.S \
+
+
 SOURCES = startup_stm32mp15x_ca7_azurertos.c \
 		  system_stm32mp15x_A7_azurertos.c \
 		  mmu_stm32mp13xx.c \
 		  syscalls.c \
-		  main.c \
+		  main.cc \
+		  ddr/stm32mp1_ddr.cc \
+		  ddr/stm32mp1_ram.cc \
+		  ddr/ram_tests.cc \
+		  uboot-port/common/memsize.c \
+		  $(SHAREDDIR)/print.cc \
 		  MP_PrivateTimer.S \
 		  app_azure_rtos.c \
 		  app_threadx.c \
 		  tx_initialize_low_level.S \
-		  $(wildcard $(EXTLIBDIR)/threadx/common/src/*.c) \
-		  $(wildcard $(EXTLIBDIR)/threadx/ports/cortex_a7/gnu/src/*.S) \
+		  $(wildcard $(EXTLIBDIR)/ST/threadx/common/src/*.c) \
+		  $(wildcard $(EXTLIBDIR)/ST/threadx/ports/cortex_a7/gnu/src/*.S) \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_usart.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_ll_rcc.c \
 		  $(EXTLIBDIR)/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal.c \

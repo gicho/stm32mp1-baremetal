@@ -15,13 +15,9 @@ load
 
 # Set breakpoints
 break main
-break __tx_irq_handler
-break *0x2ffc8a68
-break IRQ_Handler
-break system_stm32mp15x_A7_azurertos.c:312
 break MainThread_Entry
-# break ThreadOne_Entry
-# break ThreadTwo_Entry
+break ThreadOne_Entry
+break ThreadTwo_Entry
 
 # (Optional) Display the layout of registers
 #layout regs
