@@ -9,7 +9,7 @@
 #include "pmic.hh"
 #include "print.hh"
 #include "stm32mp157cxx_ca7.h"
-//#include "systeminit.h"
+#include "systeminit.h"
 
 #include "osd32brk_conf.hh"
 #include "stm32disco_conf.hh"
@@ -29,7 +29,7 @@ void main()
 	Board::OrangeLED led;
 
 	auto clockspeed = SystemClocks::init_core_clocks(Board::HSE_Clock_Hz, Board::MPU_MHz);
-	//security_init();
+	security_init();
 
 	Uart<Board::ConsoleUART> console(Board::UartRX, Board::UartTX, 115200);
 	print("\n\nMP1-Boot\n\n");
@@ -48,8 +48,8 @@ void main()
 	print("Initializing RAM\n");
 	stm32mp1_ddr_setup();
 
-	//print("Testing RAM.\n");
-	//RamTests::run_all(DRAM_MEM_BASE, stm32mp1_ddr_get_size());
+	print("Testing RAM.\n");
+	RamTests::run_all(DRAM_MEM_BASE, stm32mp1_ddr_get_size());
 
 
     /* Enter the ThreadX kernel.  */

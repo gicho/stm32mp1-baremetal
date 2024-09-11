@@ -20,6 +20,7 @@ SOURCES = startup_stm32mp15x_ca7_azurertos.c \
 		  mmu_stm32mp13xx.c \
 		  syscalls.c \
 		  main.cc \
+		  systeminit.c \
 		  ddr/stm32mp1_ddr.cc \
 		  ddr/stm32mp1_ram.cc \
 		  ddr/ram_tests.cc \

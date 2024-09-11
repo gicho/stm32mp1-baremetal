@@ -76,9 +76,9 @@ int stm32mp1_ddr_setup(void)
 	RCC->DDRITFCR = RCC->DDRITFCR | RCC_DDRITFCR_AXIDCGEN;
 
 	/* check size */
-	//debug("get_ram_size(", Hex{(u32)priv->info.base}, ", ", Hex{(u32)DDR_MEM_SIZE}, ")\n");
-	//priv->info.size = get_ram_size((long *)priv->info.base, DDR_MEM_SIZE);
-	//debug(Hex{(u32)priv->info.size}, "\n");
+	debug("get_ram_size(", Hex{(u32)priv->info.base}, ", ", Hex{(u32)DDR_MEM_SIZE}, ")\n");
+	priv->info.size = get_ram_size((long *)priv->info.base, DDR_MEM_SIZE);
+	debug(Hex{(u32)priv->info.size}, "\n");
 
 	/* check memory access for all memory */
 	if (config.info.size != priv->info.size) {

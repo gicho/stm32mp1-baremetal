@@ -44,5 +44,5 @@ constexpr I2C_Config I2C_config = PMIC::I2C_config;
 }; // namespace USBC_Interface
 
 constexpr uint32_t HSE_Clock_Hz = 24000000;
-constexpr uint32_t MPU_MHz = 650;
+constexpr uint32_t MPU_MHz = 800;
 } // namespace STM32MP1Disco
